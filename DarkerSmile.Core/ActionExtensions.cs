@@ -1,13 +1,14 @@
 ﻿using System;
+
 namespace DarkerSmile
 {
     /// <summary>
-    /// Auto Null Checks Action Calls
+    ///     Auto Null Checks Action Calls
     /// </summary>
     public static class ActionExtensions
     {
         /// <summary>
-        /// Activates action if it is not Null
+        ///     Activates action if it is not Null
         /// </summary>
         public static void Fire(this Action action)
         {
@@ -15,7 +16,7 @@ namespace DarkerSmile
         }
 
         /// <summary>
-        /// Activates action if it is not Null
+        ///     Activates action if it is not Null
         /// </summary>
         public static void Fire<T>(this Action<T> action, T item)
         {
@@ -23,7 +24,7 @@ namespace DarkerSmile
         }
 
         /// <summary>
-        /// Activates action if it is not Null
+        ///     Activates action if it is not Null
         /// </summary>
         public static T Fire<T>(this Func<T> action)
         {
@@ -31,7 +32,7 @@ namespace DarkerSmile
         }
 
         /// <summary>
-        /// Activates action if it is not Null
+        ///     Activates action if it is not Null
         /// </summary>
         public static TX Fire<T, TX>(this Func<T, TX> action, T item)
         {

@@ -3,21 +3,29 @@
 namespace DarkerSmile
 {
     /// <summary>
-    /// Checks object Existence
+    ///     Checks object Existence
     /// </summary>
     public static class ObjectExtensions
     {
         /// <summary>
-        /// Returns true if the object is not null
+        ///     Returns true if the object is not null
         /// </summary>
         public static bool Exists(this object o)
         {
-            return o != null;
+            return null != o;
         }
 
         /// <summary>
-        /// Performs Equality Comparison on Generic Element.
-        /// Returns true if element is equal to it's default state.
+        ///     Returns true if the object is null
+        /// </summary>
+        public static bool DoesNotExist(this object o)
+        {
+            return !o.Exists();
+        }
+
+        /// <summary>
+        ///     Performs Equality Comparison on Generic Element.
+        ///     Returns true if element is equal to it's default state.
         /// </summary>
         /// <typeparam name="T">Type to check null state of</typeparam>
         /// <param name="a">Item to check</param>

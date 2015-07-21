@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+
 namespace DarkerSmile.Core.Tests
 {
     [TestFixture]
@@ -32,7 +33,19 @@ namespace DarkerSmile.Core.Tests
             Assert.IsTrue(obj.Exists());
         }
 
+        [Test]
+        public void Given_Null_When_DoesNotExist_ReturnTrue()
+        {
+            object o = null;
+            Assert.IsFalse(o.DoesNotExist());
+        }
 
+        [Test]
+        public void Given_Value_When_DoesNotExist_ReturnFalse()
+        {
+            var obj = new object();
+            Assert.IsTrue(obj.DoesNotExist());
+        }
 
     }
 }

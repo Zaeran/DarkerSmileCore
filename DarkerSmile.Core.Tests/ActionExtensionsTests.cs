@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+
 namespace DarkerSmile.Core.Tests
 {
     [TestFixture]
@@ -36,8 +37,6 @@ namespace DarkerSmile.Core.Tests
             ar.Fire("ABC");
             Assert.AreEqual("ABC", vm);
         }
-
-
 
         [Test]
         public void Given_Null_WhenFuncFire_Then_DoesNotThrow()
