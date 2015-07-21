@@ -2,6 +2,9 @@
 
 namespace DarkerSmile
 {
+    /// <summary>
+    /// Checks object Existence
+    /// </summary>
     public static class ObjectExtensions
     {
         /// <summary>

@@ -2,11 +2,8 @@
 namespace DarkerSmile.Core.Tests
 {
     [TestFixture]
-    public class ObjectExtensionsTest
+    public class ObjectExtensionsTests
     {
-        /// <summary>
-        /// Given NullObject When NullOrDefault Then Returns true
-        /// </summary>
         [Test]
         public void Given_Null_When_NullOrDefault_ReturnTrue()
         {
@@ -20,5 +17,22 @@ namespace DarkerSmile.Core.Tests
             var obj = new object();
             Assert.IsFalse(obj.NullOrDefault());
         }
+
+        [Test]
+        public void Given_Null_When_Exists_ReturnFalse()
+        {
+            object o = null;
+            Assert.IsFalse(o.Exists());
+        }
+
+        [Test]
+        public void Given_Value_When_Exists_ReturnTrue()
+        {
+            var obj = new object();
+            Assert.IsTrue(obj.Exists());
+        }
+
+
+
     }
 }
