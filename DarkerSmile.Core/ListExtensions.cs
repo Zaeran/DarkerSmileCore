@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DarkerSmile
 {
@@ -39,5 +40,32 @@ namespace DarkerSmile
                 if (!self.Contains(item))
                     self.Add(item);
         }
+
+        public static T TakeRandomOne<T>(this IList<T> source)
+        {
+            if(source.DoesNotExist()) throw new ArgumentNullException("source");
+            var it = source.GetRandomOne();
+            source.Remove(it);
+            return it;
+        }
+
+        public static IEnumerable<T> TakeRandomX<T>(this IList<T> source,int amount)
+        {
+            List<T> items = new List<T>();
+            while (amount > 0)
+            {
+                if (!source.Any()) return items;
+                var newItem = source.TakeRandomOne();
+                if(newItem != null) items.Add(newItem);
+                amount--;
+            }
+            return items;
+        }
+
+
+
+
+
+
     }
 }

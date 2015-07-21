@@ -20,9 +20,10 @@ namespace DarkerSmile
         public static string ToDisplayString<T>(this IEnumerable<T> source)
         {
             if (source.DoesNotExist()) return "null";
-
+            var enumerable = source as IList<T> ?? source.ToList();
+            if (!enumerable.Any()) return "[]";
             var s = "[";
-            s = source.Aggregate(s, (res, x) => res + x.ToString() + ", ");
+            s = enumerable.Aggregate(s, (res, x) => res + x.ToString() + ", ");
             return string.Format("{0}]", s.Substring(0, s.Length - 2));
         }
 
@@ -35,6 +36,21 @@ namespace DarkerSmile
         public static IEnumerable<T> ButFirst<T>(this IEnumerable<T> source)
         {
             return source.Skip(1);
+        }
+
+
+        /// <summary>
+        /// Returns true if each element in the collection is distinct from each other
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static bool AllElementsAreUnique<T>(this IEnumerable<T> source)
+        {
+            if (source == null) return false;
+            var enumerable = source as IList<T> ?? source.ToList();
+            if (!enumerable.Any()) return false;
+            return enumerable.Distinct().Count() == enumerable.Count();
         }
 
         /// <summary>
@@ -86,7 +102,7 @@ namespace DarkerSmile
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static IEnumerable<T> ShiftedLeft<T>(this IEnumerable<T> source)
+        public static IEnumerable<T> AsShiftedLeft<T>(this IEnumerable<T> source)
         {
             var enumeratedList = source as IList<T> ?? source.ToList();
             return enumeratedList.ButFirst().Concat(enumeratedList.Take(1));
@@ -98,7 +114,7 @@ namespace DarkerSmile
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static IEnumerable<T> ShiftedRight<T>(this IEnumerable<T> source)
+        public static IEnumerable<T> AsShiftedRight<T>(this IEnumerable<T> source)
         {
             var enumeratedList = source as IList<T> ?? source.ToList();
             yield return enumeratedList.Last();
@@ -115,10 +131,22 @@ namespace DarkerSmile
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static T RandomOne<T>(this IEnumerable<T> source)
+        public static T GetRandomOne<T>(this IEnumerable<T> source)
         {
-            return source.GetRandomX(1).First();
+            return source.GetRandomX(1).FirstOrDefault();
         }
+
+        /// <summary>
+        /// Returns true if the enumerable has no elements
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static bool Empty<T>(this IEnumerable<T> a)
+        {
+            return !a.Any();
+        }
+
 
         /// <summary>
         ///     Returns a random X amount of elements from the collection
@@ -130,28 +158,19 @@ namespace DarkerSmile
         public static IEnumerable<T> GetRandomX<T>(this IEnumerable<T> source, int amount)
         {
             if (source == null) throw new ArgumentNullException("source");
-
-
             if (amount < 0) throw new ArgumentOutOfRangeException("amount");
+            var enumerable = source as T[] ?? source.ToArray();
 
-            var samples = new List<T>();
+            if (enumerable.Empty()) return new List<T>();
 
-            var i = 1;
-
-            foreach (var item in source)
-            {
-                if (i <= amount) samples.Add(item);
-                else
-                {
-                    var r = R.Next(0, i);
-                    if (r < amount) samples[r] = item;
-                }
-
-                i++;
-            }
-
-            return samples;
+            List<T> result = new List<T>();
+            for (int i = 0; i < amount; i++)
+                result.Add(enumerable[R.Next(0,enumerable.Length)]);
+            return result;
         }
+
+       
+
 
         /// <summary>
         ///     Returns the Enumerable in list form with its elements shuffled.
@@ -179,5 +198,18 @@ namespace DarkerSmile
         {
             return source.Where(item => item as TFilter != null).Cast<TFilter>();
         }
+
+        /// <summary>
+        /// Returns true if no elements in the collection are null
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static bool NoNullElements<T>(this IEnumerable<T> source)
+        {
+            return source != null && !source.Any(x => x.DoesNotExist());
+        }
+
+
     }
 }

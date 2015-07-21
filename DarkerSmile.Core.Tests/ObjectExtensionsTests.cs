@@ -37,14 +37,14 @@ namespace DarkerSmile.Core.Tests
         public void Given_Null_When_DoesNotExist_ReturnTrue()
         {
             object o = null;
-            Assert.IsFalse(o.DoesNotExist());
+            Assert.IsTrue(o.DoesNotExist());
         }
 
         [Test]
         public void Given_Value_When_DoesNotExist_ReturnFalse()
         {
             var obj = new object();
-            Assert.IsTrue(obj.DoesNotExist());
+            Assert.IsFalse(obj.DoesNotExist());
         }
 
     }
