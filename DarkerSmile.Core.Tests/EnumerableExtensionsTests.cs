@@ -8,12 +8,6 @@ namespace DarkerSmile.Core.Tests
     [TestFixture]
     public class EnumerableExtensionsTests
     {
-        public class Dog : IPet { public string Name; }
-        public class Cat : IPet { public string Name; }
-        public interface IPet {}
-
-
-
         [Test]
         public void Given_List_When_ButFirst_Then_ReturnsListShortFirstElement()
         {
@@ -21,7 +15,7 @@ namespace DarkerSmile.Core.Tests
             const string b = "b";
             const string c = "c";
 
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             var result = l.ButFirst().ToList();
 
@@ -37,7 +31,7 @@ namespace DarkerSmile.Core.Tests
             const string b = "b";
             const string c = "c";
 
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             var result = l.ButLast().ToList();
 
@@ -46,24 +40,21 @@ namespace DarkerSmile.Core.Tests
             Assert.AreEqual(b, result[1]);
         }
 
-
-
         [Test]
         public void Given_SingleElementList_When_ButFirst_Then_ReturnsEmptyList()
         {
             const string a = "a";
-            var l = new List<string> { a };
+            var l = new List<string> {a};
 
             var result = l.ButFirst().ToList();
             Assert.AreEqual(0, result.Count());
         }
 
-
         [Test]
         public void Given_ValidList_When_ToDisplayString_ReturnsString()
         {
             const string result = "[a, b, c]";
-            var a = new List<string> { "a", "b", "c" };
+            var a = new List<string> {"a", "b", "c"};
             Assert.AreEqual(result, a.ToDisplayString());
         }
 
@@ -75,7 +66,8 @@ namespace DarkerSmile.Core.Tests
             Assert.AreEqual(result, a.ToDisplayString());
         }
 
-        [Test] public void Given_NullList_When_ToDisplayString_ReturnsNullString()
+        [Test]
+        public void Given_NullList_When_ToDisplayString_ReturnsNullString()
         {
             const string result = "null";
             List<string> a = null;
@@ -88,11 +80,11 @@ namespace DarkerSmile.Core.Tests
             const string a = "a";
             const string b = "b";
             const string c = "c";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
             List<string> nl = null;
-            string rand = "";
+            var rand = "";
             Assert.DoesNotThrow(() => rand = l.GetRandomOne());
-            Assert.Contains(rand,l);
+            Assert.Contains(rand, l);
         }
 
         [Test]
@@ -101,18 +93,17 @@ namespace DarkerSmile.Core.Tests
             const string a = "a";
             const string b = "b";
             const string c = "c";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
             IEnumerable<string> rand = new List<string>();
             Assert.DoesNotThrow(() => rand = l.GetRandomX(4));
-            Assert.AreEqual(4,rand.Count());
+            Assert.AreEqual(4, rand.Count());
         }
-
 
         [Test]
         public void Given_EmptyList_When_RandomOne_ReturnDefault()
         {
             var l = new List<string>();
-            string rand = "";
+            var rand = "";
             Assert.DoesNotThrow(() => rand = l.GetRandomOne());
             Assert.IsNull(rand);
         }
@@ -129,22 +120,22 @@ namespace DarkerSmile.Core.Tests
         [Test]
         public void Given_SingleItemList_When_RandomOne_ReturnSingle()
         {
-            var l = new List<string>{"a"};
-            string rand = "";
+            var l = new List<string> {"a"};
+            var rand = "";
             Assert.DoesNotThrow(() => rand = l.GetRandomOne());
-           Assert.AreEqual("a",rand);
+            Assert.AreEqual("a", rand);
         }
 
         [Test]
         public void Given_SingleItemList_When_RandomX_ReturnSingle()
         {
-            var l = new List<string>{"a"};
+            var l = new List<string> {"a"};
             IList<string> rand = new List<string>();
             Assert.DoesNotThrow(() => rand = l.GetRandomX(4).ToList());
-            Assert.AreEqual(4,rand.Count);
-            for (int i = 0; i < 4; i++)
+            Assert.AreEqual(4, rand.Count);
+            for (var i = 0; i < 4; i++)
             {
-                Assert.AreEqual("a", rand[i]);    
+                Assert.AreEqual("a", rand[i]);
             }
         }
 
@@ -154,18 +145,18 @@ namespace DarkerSmile.Core.Tests
             const string a = "a";
             const string b = "b";
             const string c = "c";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
             IEnumerable<string> rand = new List<string>();
             Assert.Throws<ArgumentOutOfRangeException>(() => rand = l.GetRandomX(-4));
         }
 
-        [Test] public void Given_NullList_When_RandomX_ThrowsArgumentNull()
+        [Test]
+        public void Given_NullList_When_RandomX_ThrowsArgumentNull()
         {
             List<string> l = null;
             IEnumerable<string> rand = new List<string>();
             Assert.Throws<ArgumentNullException>(() => rand = l.GetRandomX(3));
         }
-
 
         [Test]
         public void Given_StringList_When_MaxByLength_ReturnsLongestWord()
@@ -173,20 +164,20 @@ namespace DarkerSmile.Core.Tests
             const string a = "sup";
             const string b = "my";
             const string c = "world";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             var result = l.MaxBy(x => x.Length).ToList();
 
             Assert.AreEqual(c, result);
         }
 
-       [Test]
+        [Test]
         public void Given_StringList_When_MinByLength_ReturnsShortestWord()
         {
             const string a = "sup";
             const string b = "my";
             const string c = "world";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             var result = l.MinBy(x => x.Length).ToList();
 
@@ -194,9 +185,9 @@ namespace DarkerSmile.Core.Tests
         }
 
         [Test]
-       public void Given_ObjectList_When_FilterByType_ReturnsCorrentCount()
-       {
-           var lst = new List<object>
+        public void Given_ObjectList_When_FilterByType_ReturnsCorrentCount()
+        {
+            var lst = new List<object>
             {
                 new Dog {Name = "Scruffy"},
                 new Dog {Name = "Poodle"},
@@ -205,21 +196,20 @@ namespace DarkerSmile.Core.Tests
                 new Dog {Name = "Floofy"}
             };
 
-           var dogs = lst.FilterByType<object, Dog>();
-           var cats = lst.FilterByType<object, Cat>();
-           var pets = lst.FilterByType<object, IPet>();
+            var dogs = lst.FilterByType<object, Dog>();
+            var cats = lst.FilterByType<object, Cat>();
+            var pets = lst.FilterByType<object, IPet>();
 
-           Assert.AreEqual(4, dogs.Count());
-           Assert.AreEqual(1, cats.Count());
-           Assert.AreEqual(5, pets.Count());
-       }
+            Assert.AreEqual(4, dogs.Count());
+            Assert.AreEqual(1, cats.Count());
+            Assert.AreEqual(5, pets.Count());
+        }
 
-
-       [Test]
+        [Test]
         public void Given_ValidList_When_ShiftLeft_Then_ElementsReordered()
         {
             string a = "a", b = "b", c = "c";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             l = l.AsShiftedLeft().ToList();
 
@@ -234,11 +224,11 @@ namespace DarkerSmile.Core.Tests
             Assert.AreEqual(b, l[2]);
         }
 
-       [Test]
+        [Test]
         public void Given_ValidList_When_ShiftRight_Then_ElementsReordered()
         {
             string a = "a", b = "b", c = "c";
-            var l = new List<string> { a, b, c };
+            var l = new List<string> {a, b, c};
 
             l = l.AsShiftedRight().ToList();
 
@@ -258,8 +248,8 @@ namespace DarkerSmile.Core.Tests
         {
             IEnumerable<string> lst = new List<string> {"a", "b", "c", "d"};
             var newList = lst.ToListShuffled();
-            Assert.AreEqual(4,newList.Count);
-            Assert.AreNotEqual(newList, new List<string> { "a", "b", "c", "d" });
+            Assert.AreEqual(4, newList.Count);
+            Assert.AreNotEqual(newList, new List<string> {"a", "b", "c", "d"});
         }
 
         [Test]
@@ -267,10 +257,7 @@ namespace DarkerSmile.Core.Tests
         {
             IEnumerable<string> lst = null;
             IList<string> newList = null;
-            Assert.DoesNotThrow(() =>
-            {
-                newList = lst.ToListShuffled();                
-            });
+            Assert.DoesNotThrow(() => { newList = lst.ToListShuffled(); });
             Assert.NotNull(newList);
             Assert.AreEqual(0, newList.Count);
         }
@@ -278,14 +265,14 @@ namespace DarkerSmile.Core.Tests
         [Test]
         public void Given_UniqueList_When_AllElementsAreUnique_ReturnsTrue()
         {
-            var lst = new List<string> {"a","b","c","d","e"};
+            var lst = new List<string> {"a", "b", "c", "d", "e"};
             Assert.True(lst.AllElementsAreUnique());
         }
 
         [Test]
         public void Given_NotUniqueList_When_AllElementsAreUnique_ReturnsTrue()
         {
-            var lst = new List<string> { "a", "a", "c", "d", "e" };
+            var lst = new List<string> {"a", "a", "c", "d", "e"};
             Assert.False(lst.AllElementsAreUnique());
         }
 
@@ -299,24 +286,36 @@ namespace DarkerSmile.Core.Tests
         [Test]
         public void Given_EmptyList_When_AllElementsAreUnique_ReturnsFalse()
         {
-            List<string> lst = new List<string>();
+            var lst = new List<string>();
             Assert.False(lst.AllElementsAreUnique());
         }
 
         [Test]
         public void Given_ValidList_When_NoNullElements_ReturnTrue()
         {
-            List<string> s = new List<string>{"a","b","c"};
+            var s = new List<string> {"a", "b", "c"};
             Assert.IsTrue(s.NoNullElements());
         }
 
         [Test]
         public void Given_ListWithNull_When_NoNullElements_ReturnFalse()
         {
-            List<string> s = new List<string> { "a", "b",null, "c" };
+            var s = new List<string> {"a", "b", null, "c"};
             Assert.IsFalse(s.NoNullElements());
         }
 
+        public class Dog : IPet
+        {
+            public string Name;
+        }
 
+        public class Cat : IPet
+        {
+            public string Name;
+        }
+
+        public interface IPet
+        {
+        }
     }
 }

@@ -38,9 +38,8 @@ namespace DarkerSmile
             return source.Skip(1);
         }
 
-
         /// <summary>
-        /// Returns true if each element in the collection is distinct from each other
+        ///     Returns true if each element in the collection is distinct from each other
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -137,7 +136,7 @@ namespace DarkerSmile
         }
 
         /// <summary>
-        /// Returns true if the enumerable has no elements
+        ///     Returns true if the enumerable has no elements
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="a"></param>
@@ -146,7 +145,6 @@ namespace DarkerSmile
         {
             return !a.Any();
         }
-
 
         /// <summary>
         ///     Returns a random X amount of elements from the collection
@@ -163,14 +161,11 @@ namespace DarkerSmile
 
             if (enumerable.Empty()) return new List<T>();
 
-            List<T> result = new List<T>();
-            for (int i = 0; i < amount; i++)
-                result.Add(enumerable[R.Next(0,enumerable.Length)]);
+            var result = new List<T>();
+            for (var i = 0; i < amount; i++)
+                result.Add(enumerable[R.Next(0, enumerable.Length)]);
             return result;
         }
-
-       
-
 
         /// <summary>
         ///     Returns the Enumerable in list form with its elements shuffled.
@@ -200,7 +195,7 @@ namespace DarkerSmile
         }
 
         /// <summary>
-        /// Returns true if no elements in the collection are null
+        ///     Returns true if no elements in the collection are null
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -209,7 +204,5 @@ namespace DarkerSmile
         {
             return source != null && !source.Any(x => x.DoesNotExist());
         }
-
-
     }
 }

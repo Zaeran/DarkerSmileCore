@@ -35,37 +35,60 @@ namespace DarkerSmile
         /// <param name="items"></param>
         public static void AddUnique<T>(this IList<T> self, IEnumerable<T> items)
         {
-            if(items.Exists())
-            foreach (var item in items)
-                if (!self.Contains(item))
-                    self.Add(item);
+            if (items.Exists())
+                foreach (var item in items)
+                    if (!self.Contains(item))
+                        self.Add(item);
         }
 
+        /// <summary>
+        ///     Removes a random element from the provided list and returns it.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static T TakeRandomOne<T>(this IList<T> source)
         {
-            if(source.DoesNotExist()) throw new ArgumentNullException("source");
+            if (source.DoesNotExist()) throw new ArgumentNullException("source");
             var it = source.GetRandomOne();
             source.Remove(it);
             return it;
         }
 
-        public static IEnumerable<T> TakeRandomX<T>(this IList<T> source,int amount)
+        /// <summary>
+        ///     Tries to Take a number of elements randomly from the provided list and return them.
+        ///     Returns as many as there are elements in the source collection.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The list to take elements from</param>
+        /// <param name="amount">The number of elements to take from the list</param>
+        /// <returns></returns>
+        public static IEnumerable<T> TakeRandomX<T>(this IList<T> source, int amount)
         {
-            List<T> items = new List<T>();
+            var items = new List<T>();
             while (amount > 0)
             {
                 if (!source.Any()) return items;
                 var newItem = source.TakeRandomOne();
-                if(newItem != null) items.Add(newItem);
+                if (newItem != null) items.Add(newItem);
                 amount--;
             }
             return items;
         }
 
-
-
-
-
-
+        /// <summary>
+        ///     Wraps the provided number to a valid element index in the provided list and returns that element.
+        ///     E.g Listlength+2 will provide theList[1] etc.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static T GetElementAtWrappedIndex<T>(this IList<T> source, int index)
+        {
+            if (source.DoesNotExist()) throw new ArgumentNullException("source");
+            if (source.Empty()) return default(T);
+            return source[index.AsClampedToListWrapped(source)];
+        }
     }
 }

@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="ActionExtensionsTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
+    <Compile Include="ComparableExtensionsTests.cs" />
+    <Compile Include="IntExtensionsTests.cs" />
     <Compile Include="ListExtensionsTests.cs" />
     <Compile Include="ObjectExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

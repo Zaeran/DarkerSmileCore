@@ -46,6 +46,5 @@ namespace DarkerSmile.Core.Tests
             var obj = new object();
             Assert.IsFalse(obj.DoesNotExist());
         }
-
     }
 }
